@@ -1,3 +1,4 @@
+const cors = require("cors")
 const request = require("request");
 createIsCool = require("iscool");
 let Twit = require("twit");
@@ -9,13 +10,14 @@ baseQuoteUrl = "https://api.kanye.rest";
 isCool = createIsCool();
 
 function tweetWord(){
-    T.post("statuses/update"), {status: quote}, function(err, reply){
-        if(err){
-            console.log("error:", err);
-        } else {
-            console.log("Tweet:", reply)
-        }
-    }
+  console.log("Hi")
+    // T.post("statuses/update"), {status: quote}, function(err, reply){
+    //     if(err){
+    //         console.log("error:", err);
+    //     } else {
+    //         console.log("Tweet:", reply)
+    //     }
+    // }
 }
 
 function tweetQuote() {
@@ -29,16 +31,16 @@ function tweetQuote() {
     if (!err) {
       quote = quoteData.quote;
       if (isCool(quote) && !quote[0].toUpperCase()) {
-        console.log({quote})
         fruitstring = quote + "berries";
         tweet += fruitstring + " taste like " + fruitstring + "!";
-        console.log(tweet);
+        // console.log(tweet);
         tweetWord(tweet)
         return;
       } else {
-        tweetQuote();
+        // console.log("hi")
+        // tweetQuote();
       }
     }
   });
 }
-// tweetQuote()
+tweetQuote()
