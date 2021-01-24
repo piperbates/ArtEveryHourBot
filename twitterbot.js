@@ -29,5 +29,5 @@ function tweetIt() {
   }
 }
 
-setInterval(tweetIt, 1000 * 60 * 60) //runs tweetIt once an hour, once this is posted to a server.
+setInterval(tweetIt, 1000 * 60) //runs tweetIt once an hour, once this is posted to a server.
 // tweetIt()
