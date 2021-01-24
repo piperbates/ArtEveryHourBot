@@ -4,16 +4,13 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "iscool": "^2.0.1",
-    "request": "^2.88.2",
     "twit": "^2.2.11"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node -r dotenv/config ./twitterbot.js "
+    "start": "node twitterbot.js"
   },
   "author": "",
   "license": "ISC"

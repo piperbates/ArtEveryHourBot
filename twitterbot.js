@@ -1,46 +1,33 @@
-const cors = require("cors")
-const request = require("request");
-createIsCool = require("iscool");
-let Twit = require("twit");
-let T = new Twit(require("./config.js"));
+require('dotenv').config();
 
-baseQuoteUrl = "https://api.kanye.rest";
-// getquoteUrl = baseNounUrl + require().key;
+console.log("Starting");
+const Twit = require("twit");
+const config = require("./config");
 
-isCool = createIsCool();
+let T = new Twit(config);
 
-function tweetWord(){
-  console.log("Hi")
-    // T.post("statuses/update"), {status: quote}, function(err, reply){
-    //     if(err){
-    //         console.log("error:", err);
-    //     } else {
-    //         console.log("Tweet:", reply)
-    //     }
-    // }
-}
+function tweetIt() {
+  let getParams = {
+    q: "#art", //can change the query that is searched for / RT'd
+    count: 1, //can change the amount of tweets to get from pull
+  };
 
-function tweetQuote() {
-  let quote = "",
-    tweet = "The ",
-    fruitsting;
+  T.get(`search/tweets`, getParams, sendTweet); //Gets a tweet
 
-  request(baseQuoteUrl, function (err, res, data) {
-    let quoteData = JSON.parse(data);
-    console.log(quoteData.quote)
-    if (!err) {
-      quote = quoteData.quote;
-      if (isCool(quote) && !quote[0].toUpperCase()) {
-        fruitstring = quote + "berries";
-        tweet += fruitstring + " taste like " + fruitstring + "!";
-        // console.log(tweet);
-        tweetWord(tweet)
-        return;
+  //Pulls specific data out of the above tweet.
+  function sendTweet(err, data, res) {
+    let tweets = data.statuses;
+    let id = tweets[0].id_str; //We want the specific tweet id
+
+    T.post(`statuses/retweet/${id}`, (err, data, res) => {
+      if (err) {
+        console.log("error: " + err);
       } else {
-        // console.log("hi")
-        // tweetQuote();
+        console.log(data);
       }
-    }
-  });
+    });
+  }
 }
-tweetQuote()
+
+setInterval(tweetIt, 1000 * 60 * 60) //runs tweetIt once an hour, once this is posted to a server.
+// tweetIt()
